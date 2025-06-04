@@ -14,6 +14,7 @@
     "lint": "backstage-cli package lint"
   },
   "dependencies": {
+    "@backstage-community/plugin-jenkins": "^0.20.0",
     "@backstage/app-defaults": "^1.6.2",
     "@backstage/canon": "^0.4.0",
     "@backstage/catalog-model": "^1.7.4",
@@ -39,6 +40,7 @@
     "@backstage/plugin-techdocs-react": "^1.2.17",
     "@backstage/plugin-user-settings": "^0.8.22",
     "@backstage/theme": "^0.6.6",
+    "@internal/plugin-time": "workspace:^",
     "@material-ui/core": "^4.12.2",
     "@material-ui/icons": "^4.9.1",
     "react": "^18.0.2",

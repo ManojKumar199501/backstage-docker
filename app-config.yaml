@@ -1,6 +1,8 @@
 app:
   title: Scaffolded Backstage App
-  baseUrl: http://localhost:3000
+  baseUrl: http://52.140.2.49:3000
+  listen:
+    host: 0.0.0.0
 
 organization:
   name: My Company
@@ -12,17 +14,17 @@ backend:
   # auth:
   #   keys:
   #     - secret: ${BACKEND_SECRET}
-  baseUrl: http://localhost:7007
+  baseUrl: http://52.140.2.49:7007
   listen:
     port: 7007
     # Uncomment the following host directive to bind to specific interfaces
-    # host: 127.0.0.1
+    host: 0.0.0.0
   csp:
     connect-src: ["'self'", 'http:', 'https:']
     # Content-Security-Policy directives follow the Helmet format: https://helmetjs.github.io/#reference
     # Default Helmet Content-Security-Policy values can be removed by setting the key to false
   cors:
-    origin: http://localhost:3000
+    origin: http://52.140.2.49:3000
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
     credentials: true
   # This is for local development only, it is not recommended to use this in production
@@ -76,7 +78,7 @@ catalog:
     entityFilename: catalog-info.yaml
     pullRequestBranchName: backstage-integration
   rules:
-    - allow: [Component, System, API, Resource, Location]
+    - allow: [User, Component, System, API, Resource, Location]
   locations:
     # Local example data, file locations are relative to the backend process, typically `packages/backend`
     - type: file

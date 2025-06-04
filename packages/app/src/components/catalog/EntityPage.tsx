@@ -58,6 +58,13 @@ import {
   isKubernetesAvailable,
 } from '@backstage/plugin-kubernetes';
 
+
+import {
+  EntityJenkinsContent,
+  EntityLatestJenkinsRunCard,
+  isJenkinsAvailable,
+} from '@backstage-community/plugin-jenkins';
+import { TimeCard } from '@internal/plugin-time';
 const techdocsContent = (
   <EntityTechdocsContent>
     <TechDocsAddons>
@@ -140,19 +147,44 @@ const overviewContent = (
     <Grid item md={8} xs={12}>
       <EntityHasSubcomponentsCard variant="gridItem" />
     </Grid>
+    <Grid item md={6}>
+      <TimeCard /> {/* Your custom card */}
+    </Grid>
   </Grid>
 );
 
 const serviceEntityPage = (
   <EntityLayout>
+    {/* OVERVIEW TAB */}
     <EntityLayout.Route path="/" title="Overview">
-      {overviewContent}
+      <>
+        {overviewContent}
+        <EntitySwitch>
+          <EntitySwitch.Case if={isJenkinsAvailable}>
+            <Grid container spacing={3}>
+              <Grid item sm={6}>
+                <EntityLatestJenkinsRunCard
+                  branch="main,master"
+                  variant="gridItem"
+                />
+              </Grid>
+            </Grid>
+          </EntitySwitch.Case>
+        </EntitySwitch>
+      </>
     </EntityLayout.Route>
-
+    {/* CI/CD TAB */}
     <EntityLayout.Route path="/ci-cd" title="CI/CD">
-      {cicdContent}
+      <>
+        {cicdContent}
+        <EntitySwitch>
+          <EntitySwitch.Case if={isJenkinsAvailable}>
+            <EntityJenkinsContent />
+          </EntitySwitch.Case>
+        </EntitySwitch>
+      </>
     </EntityLayout.Route>
-
+    {/* KUBERNETES TAB */}
     <EntityLayout.Route
       path="/kubernetes"
       title="Kubernetes"
@@ -160,7 +192,7 @@ const serviceEntityPage = (
     >
       <EntityKubernetesContent />
     </EntityLayout.Route>
-
+    {/* API TAB */}
     <EntityLayout.Route path="/api" title="API">
       <Grid container spacing={3} alignItems="stretch">
         <Grid item md={6}>
@@ -171,7 +203,7 @@ const serviceEntityPage = (
         </Grid>
       </Grid>
     </EntityLayout.Route>
-
+    {/* DEPENDENCIES TAB */}
     <EntityLayout.Route path="/dependencies" title="Dependencies">
       <Grid container spacing={3} alignItems="stretch">
         <Grid item md={6}>
@@ -182,7 +214,7 @@ const serviceEntityPage = (
         </Grid>
       </Grid>
     </EntityLayout.Route>
-
+    {/* DOCS TAB */}
     <EntityLayout.Route path="/docs" title="Docs">
       {techdocsContent}
     </EntityLayout.Route>
